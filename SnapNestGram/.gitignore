@@ -7,10 +7,23 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependency directories
 node_modules
 dist
 dist-ssr
 *.local
+
+# Environment variables
+.env
+
+# Build directories
+.cache/
+.next/
+out/
+coverage/
+
+# TypeScript compiled files
+*.tsbuildinfo
 
 # Editor directories and files
 .vscode/*
@@ -22,3 +35,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Config and lint files
+eslint.config.js
