@@ -1,36 +1,4 @@
-# File created using '.gitignore Generator' for Visual Studio Code: https://bit.ly/vscode-gig
-# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,linux
-# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,linux
-
-### Linux ###
-*~
-.fuse_hidden*       # Temporary files if a process has a handle open on a deleted file
-.directory          # KDE directory preferences
-.Trash-*            # Linux trash folder
-.nfs*               # .nfs files are created when an open file is removed but is still being accessed
-
-### Node.js ###
-node_modules
-dist
-dist-ssr
-
-### Environment Files ###
-.env
-*.env
-
-### Visual Studio Code ###
-.vscode/
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-.vscode/*.code-snippets
-.history/
-
-### Built Visual Studio Code Extensions ###
-*.vsix
-
-### Logs ###
+# Logs
 logs
 *.log
 npm-debug.log*
@@ -39,7 +7,27 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-### Editor Directories and Files ###
+# Dependency directories
+node_modules
+dist
+dist-ssr
+*.local
+
+# Environment variables
+.env
+
+# Build directories
+.cache/
+.next/
+out/
+coverage/
+
+# TypeScript compiled files
+*.tsbuildinfo
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
 .idea
 .DS_Store
 *.suo
@@ -48,3 +36,5 @@ lerna-debug.log*
 *.sln
 *.sw?
 
+# Config and lint files
+eslint.config.js
