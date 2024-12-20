@@ -41,18 +41,3 @@
   color: #888;
 }
 
-/* App.css */
-.calendar {
-  background-color: white !important;
-  color: black !important;
-}
-
-.calendar .day {
-  background-color: white !important;
-  color: black !important;
-}
-
-.calendar .day[aria-selected="true"] {
-  background-color: #e2e8f0; /* Adjust to a light color for selected days */
-  color: black;
-}
