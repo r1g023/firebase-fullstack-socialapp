@@ -1,15 +1,15 @@
 import React from "react";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 interface IProtectedRoutesProps {
-  isAuthenticated: boolean;
+  auth: boolean;
 }
 
-const ProtectedRoutes: React.FC<IProtectedRoutesProps> = ({
-  isAuthenticated
-}) => {
+const ProtectedRoutes: React.FC<IProtectedRoutesProps> = ({ auth }) => {
+  const location = useLocation();
   return (
     <div>
-      {isAuthenticated ? <h1>Protected Routes</h1> : <h1>Access Denied</h1>}
+      {auth ? <Outlet /> : <Navigate to="/login" state={{ from: location }} />}
     </div>
   );
 };
