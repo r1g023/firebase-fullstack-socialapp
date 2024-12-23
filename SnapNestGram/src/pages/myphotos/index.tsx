@@ -12,7 +12,7 @@ const MyPhotos: React.FC<IMyPhotosProps> = ({ photos }) => {
         {photos.map(photo => (
           <div key={photo.id} className="photo-item">
             <img src={photo.url} alt={photo.title} />
-            <p>{photo.title}</p>
+            <p>Title:{photo.title}</p>
           </div>
         ))}
       </div>
