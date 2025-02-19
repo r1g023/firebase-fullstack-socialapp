@@ -1,20 +1,32 @@
-import { createContext } from "react";
-import { signInWithEmailAndPassword, User } from "firebase/auth";
-import { auth } from "../firebase";
+import {
+  GoogleAuthProvider,
+  User,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut
+} from "firebase/auth";
+import { createContext, useContext, useEffect, useState } from "react";
+import { auth } from "../firebaseConfig";
 
-type AuthContextData = {
+interface IUserAuthProviderProps {
+  children: React.ReactNode;
+}
+
+interface AuthContextData {
   user: User | null;
-  logIn: typeof logIn;
-  signup: typeof signup;
-  logOut: typeof logOut;
-  googleSignIn: typeof googleSignIn;
-};
+  logIn: (email: string, password: string) => Promise<any>;
+  signUp: (email: string, password: string) => Promise<any>;
+  logOut: () => Promise<void>;
+  googleSignIn: () => Promise<any>;
+}
 
 const logIn = (email: string, password: string) => {
   return signInWithEmailAndPassword(auth, email, password);
 };
 
-const signup = (email: string, password: string) => {
+const signUp = (email: string, password: string) => {
   return createUserWithEmailAndPassword(auth, email, password);
 };
 
@@ -27,29 +39,42 @@ const googleSignIn = () => {
   return signInWithPopup(auth, googleAuthProvider);
 };
 
-export const UserAuthContext = createContext<AuthContextData>({
-  user: null,
-  logIn,
-  signup,
-  logOut,
-  googleSignIn
-});
+export const UserAuthContext = createContext<AuthContextData | null>(null);
 
-export const UserAuthProvider: React.FC = ({ children }) => {
+export const UserAuthProvider: React.FC<IUserAuthProviderProps> = ({
+  children
+}) => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, user => {
-      setUser(user);
+    const unsubscribe = onAuthStateChanged(auth, currentUser => {
+      setUser(currentUser);
     });
 
-    return unsubscribe;
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
+  const value: AuthContextData = {
+    user,
+    logIn,
+    signUp,
+    logOut,
+    googleSignIn
+  };
+
   return (
-    <UserAuthContext.Provider
-      value={{ user, logIn, signup, logOut, googleSignIn }}>
+    <UserAuthContext.Provider value={value}>
       {children}
     </UserAuthContext.Provider>
   );
+};
+
+export const useUserAuth = () => {
+  const context = useContext(UserAuthContext);
+  if (!context) {
+    throw new Error("useUserAuth must be used within a UserAuthProvider");
+  }
+  return context;
 };
