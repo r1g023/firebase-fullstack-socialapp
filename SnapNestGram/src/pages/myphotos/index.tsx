@@ -7,7 +7,7 @@ interface IMyPhotosProps {
 const MyPhotos: React.FC<IMyPhotosProps> = ({ photos }) => {
   return (
     <div>
-      <h1>My Photos</h1>
+      <h1>My Photos!</h1>
       <div className="photos-grid">
         {photos.map(photo => (
           <div key={photo.id} className="photo-item">
