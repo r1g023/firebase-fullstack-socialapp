@@ -10,7 +10,7 @@ import ProtectedRoutes from "./components/ProctedRoutes";
 
 export const router = createBrowserRouter([
   {
-    element: <ProtectedRoutes auth={false} />,
+    element: <ProtectedRoutes auth={true} />,
     children: [
       {
         path: "/",

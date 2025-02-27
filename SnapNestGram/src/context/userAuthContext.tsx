@@ -14,14 +14,6 @@ interface IUserAuthProviderProps {
   children: React.ReactNode;
 }
 
-interface AuthContextData {
-  user: User | null;
-  logIn: (email: string, password: string) => Promise<any>;
-  signUp: (email: string, password: string) => Promise<any>;
-  logOut: () => Promise<void>;
-  googleSignIn: () => Promise<any>;
-}
-
 const logIn = (email: string, password: string) => {
   return signInWithEmailAndPassword(auth, email, password);
 };
@@ -39,8 +31,19 @@ const googleSignIn = () => {
   return signInWithPopup(auth, googleAuthProvider);
 };
 
+// Define the authentication context data using `typeof` for cleaner type inference
+interface AuthContextData {
+  user: User | null;
+  logIn: typeof logIn;
+  signUp: typeof signUp;
+  logOut: typeof logOut;
+  googleSignIn: typeof googleSignIn;
+}
+
+// Create the authentication context
 export const UserAuthContext = createContext<AuthContextData | null>(null);
 
+// Provide authentication state to the application
 export const UserAuthProvider: React.FC<IUserAuthProviderProps> = ({
   children
 }) => {
@@ -71,6 +74,7 @@ export const UserAuthProvider: React.FC<IUserAuthProviderProps> = ({
   );
 };
 
+// Custom hook to access authentication context
 export const useUserAuth = () => {
   const context = useContext(UserAuthContext);
   if (!context) {
