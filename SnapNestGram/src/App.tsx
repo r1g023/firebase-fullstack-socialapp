@@ -1,15 +1,13 @@
-import React, { useState } from "react";
+import * as React from "react";
 import { RouterProvider } from "react-router-dom";
-
-import "./App.css";
 import router from "./routes";
+import { UserAuthProvider } from "./context/userAuthContext";
 
 const App: React.FC = () => {
   return (
-    <div>
-      {/* RouterProvider should wrap your routes and page elements */}
+    <UserAuthProvider>
       <RouterProvider router={router} />
-    </div>
+    </UserAuthProvider>
   );
 };
 

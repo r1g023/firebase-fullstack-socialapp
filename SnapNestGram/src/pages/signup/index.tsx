@@ -11,8 +11,9 @@ import {
 } from "@/components/ui/card";
 import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
-import { UserSignIn } from "@/types";
+import { UserSignIn, UserLogIn } from "@/types";
 import { Label } from "@radix-ui/react-label";
+import { useUserAuth } from "@/context/userAuthContext";
 
 const initialValue: UserSignIn = {
   email: "",
@@ -23,9 +24,42 @@ const initialValue: UserSignIn = {
 interface ISignupProps {}
 
 const Signup: React.FC<ISignupProps> = () => {
+  const { googleSignIn, signUp } = useUserAuth();
+  const navigate = useNavigate();
+
   const [userInfo, setUserInfo] = React.useState<UserSignIn>(initialValue);
+
+  // Google Sign In
+  const handleGoogleSignIn = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    console.log("Google Sign In");
+    try {
+      console.log("Google Sign In");
+      await googleSignIn();
+      navigate("/");
+    } catch (error) {
+      console.error("Error signing in with Google: ", error);
+    }
+  };
+
+  // submit form
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("userInfo-->", userInfo);
+
+    try {
+      console.log("The user info is: ", userInfo);
+      await signUp(userInfo.email, userInfo.password);
+      navigate("/");
+    } catch (error) {
+      console.error("Error signing up: ", error);
+    }
+  };
+
   return (
-    <div className="max-w-sm rounded-xl border bg-card text-card-foreground shadow-sm">
+    <div
+      className="max-w-sm rounded-xl border bg-card text-card-foreground shadow-sm"
+      style={{ border: "3px solid red" }}>
       <Card>
         {/*Header*/}
         <form onSubmit={e => e.preventDefault()}>
@@ -63,9 +97,11 @@ const Signup: React.FC<ISignupProps> = () => {
               <Input
                 id="email"
                 type="email"
-                placeholder="dipesh@example.com"
-                value={""}
-                onChange={() => ""}
+                placeholder="Enter your email"
+                value={userInfo.email}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setUserInfo({ ...userInfo, email: e.target.value })
+                }
               />
             </div>
 
@@ -76,8 +112,10 @@ const Signup: React.FC<ISignupProps> = () => {
                 id="password"
                 type="password"
                 placeholder="Password"
-                value={""}
-                onChange={() => ""}
+                value={userInfo.password}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setUserInfo({ ...userInfo, password: e.target.value })
+                }
               />
             </div>
 
@@ -88,8 +126,10 @@ const Signup: React.FC<ISignupProps> = () => {
                 id="confirmpassword"
                 type="password"
                 placeholder="Confirm password"
-                value={""}
-                onChange={() => ""}
+                value={userInfo.confirmPassword}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setUserInfo({ ...userInfo, confirmPassword: e.target.value })
+                }
               />
             </div>
           </CardContent>
