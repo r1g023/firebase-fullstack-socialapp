@@ -5,12 +5,7 @@ import { UserAuthProvider } from "./context/userAuthContext";
 
 const App: React.FC = () => {
   return (
-    <div
-      style={{
-        border: "1px solid blue",
-        padding: "20px",
-        width: "1690px"
-      }}>
+    <div className="min-h-screen bg-dark-navy text-foreground">
       <UserAuthProvider>
         <RouterProvider router={router} />
       </UserAuthProvider>
