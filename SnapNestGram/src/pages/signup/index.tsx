@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
-import { UserSignIn, UserLogIn } from "@/types";
+import { UserSignIn } from "@/types";
 import { Label } from "@radix-ui/react-label";
 import { useUserAuth } from "@/context/userAuthContext";
 import image1 from "@/assets/images/image1-firebase.jpg";
@@ -25,18 +25,14 @@ const initialValue: UserSignIn = {
   confirmPassword: ""
 };
 
-interface ISignupProps {}
-
-const Signup: React.FC<ISignupProps> = () => {
+const Signup: React.FC = () => {
   const { googleSignIn, signUp } = useUserAuth();
   const navigate = useNavigate();
 
   const [userInfo, setUserInfo] = React.useState<UserSignIn>(initialValue);
 
-  // Google Sign In
   const handleGoogleSignIn = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log("Google Sign In");
     try {
       await googleSignIn();
       navigate("/");
@@ -45,16 +41,12 @@ const Signup: React.FC<ISignupProps> = () => {
     }
   };
 
-  // submit form
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // Check if passwords match
     if (userInfo.password !== userInfo.confirmPassword) {
       console.error("Passwords do not match!");
       return;
     }
-
     try {
       await signUp(userInfo.email, userInfo.password);
       navigate("/");
@@ -64,114 +56,138 @@ const Signup: React.FC<ISignupProps> = () => {
   };
 
   return (
-    <div className="bg-slate-800 w-full h-screen">
+    <div className="w-full min-h-screen bg-dark-navy">
       <div className="container mx-auto p-6 flex h-full">
         <div className="flex justify-center items-center w-full">
+          {/* Image Gallery - Left Side */}
           <div className="p-6 w-2/3 hidden lg:block">
             <div className="grid grid-cols-2 gap-2">
               <img
-                className=" w-2/3 h-auto aspect-video rounded-3xl place-self-end"
+                className="w-2/3 h-auto aspect-video rounded-lg object-cover place-self-end"
                 src={image2}
+                alt="Gallery 2"
               />
               <img
-                className=" w-2/4 h-auto aspect-auto rounded-3xl"
+                className="w-2/4 h-auto aspect-auto rounded-lg object-cover"
                 src={image1}
+                alt="Gallery 1"
               />
               <img
-                className=" w-2/4 h-auto aspect-auto rounded-3xl place-self-end"
+                className="w-2/4 h-auto aspect-auto rounded-lg object-cover place-self-end"
                 src={image4}
+                alt="Gallery 4"
               />
               <img
-                className=" w-2/3 h-auto aspect-video rounded-3xl"
+                className="w-2/3 h-auto aspect-video rounded-lg object-cover"
                 src={image3}
+                alt="Gallery 3"
               />
             </div>
           </div>
-          <div className="max-w-sm rounded-xl border bg-card text-card-foreground shadow-sm">
-            <Card>
-              {/*Header*/}
+
+          {/* Signup Form - Right Side */}
+          <div className="p-6 w-full lg:w-1/3 flex justify-center">
+            <Card className="w-full max-w-md border border-border bg-card text-card-foreground shadow-lg">
               <form onSubmit={handleSubmit}>
                 <CardHeader className="space-y-1">
-                  <CardTitle className="text-2xl text-center mb-4">
-                    SnapNestGram
+                  <CardTitle className="text-2xl text-center font-bold text-foreground">
+                    Create Account
                   </CardTitle>
-                  <CardDescription>
-                    Enter your email below to create your account
+                  <CardDescription className="text-center text-muted-foreground">
+                    Join our community today
                   </CardDescription>
                 </CardHeader>
 
-                {/*Content*/}
                 <CardContent className="grid gap-4">
                   <div className="grid">
-                    <Button variant="outline" onClick={handleGoogleSignIn}>
+                    <Button
+                      variant="outline"
+                      onClick={handleGoogleSignIn}
+                      className="flex items-center justify-center border-border bg-background hover:bg-accent text-foreground">
                       <Icons.google className="mr-2 h-4 w-4" />
-                      Google
+                      Sign up with Google
                     </Button>
                   </div>
+
                   <div className="relative">
                     <div className="absolute inset-0 flex items-center">
-                      <span className="w-full border-t" />
+                      <span className="w-full border-t border-border" />
                     </div>
                     <div className="relative flex justify-center text-xs uppercase">
-                      <span className="bg-background px-2 text-muted-foreground">
-                        Or
+                      <span className="px-2 bg-card text-muted-foreground">
+                        Or continue with email
                       </span>
                     </div>
                   </div>
 
-                  {/*Email*/}
                   <div className="grid gap-2">
-                    <Label htmlFor="email">Email address</Label>
+                    <Label htmlFor="email" className="text-foreground">
+                      Email
+                    </Label>
                     <Input
                       id="email"
                       type="email"
-                      placeholder="Enter your email"
+                      placeholder="your@email.com"
+                      className="border-border bg-background text-foreground"
                       value={userInfo.email}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      onChange={e =>
                         setUserInfo({ ...userInfo, email: e.target.value })
                       }
+                      required
                     />
                   </div>
 
-                  {/*Password*/}
                   <div className="grid gap-2">
-                    <Label htmlFor="password">Password</Label>
+                    <Label htmlFor="password" className="text-foreground">
+                      Password
+                    </Label>
                     <Input
                       id="password"
                       type="password"
-                      placeholder="Password"
+                      placeholder="••••••••"
+                      className="border-border bg-background text-foreground"
                       value={userInfo.password}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      onChange={e =>
                         setUserInfo({ ...userInfo, password: e.target.value })
                       }
+                      required
                     />
                   </div>
 
-                  {/*Confirm Password*/}
                   <div className="grid gap-2">
-                    <Label htmlFor="confirmpassword">Confirm password</Label>
+                    <Label
+                      htmlFor="confirmPassword"
+                      className="text-foreground">
+                      Confirm Password
+                    </Label>
                     <Input
-                      id="confirmpassword"
+                      id="confirmPassword"
                       type="password"
-                      placeholder="Confirm password"
+                      placeholder="••••••••"
+                      className="border-border bg-background text-foreground"
                       value={userInfo.confirmPassword}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      onChange={e =>
                         setUserInfo({
                           ...userInfo,
                           confirmPassword: e.target.value
                         })
                       }
+                      required
                     />
                   </div>
                 </CardContent>
 
-                {/*Footer*/}
                 <CardFooter className="flex flex-col">
-                  <Button className="w-full" type="submit">
+                  <Button
+                    className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+                    type="submit">
                     Sign Up
                   </Button>
-                  <p className="mt-3 text-sm text-center">
-                    Already have an account? <Link to="/login">Login</Link>
+                  <p className="mt-4 text-sm text-center text-muted-foreground">
+                    Already have an account?{" "}
+                    <Link to="/login" className="text-primary hover:underline">
+                      Log in
+                    </Link>
                   </p>
                 </CardFooter>
               </form>
