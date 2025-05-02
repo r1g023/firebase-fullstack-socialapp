@@ -12,7 +12,7 @@ module.exports = {
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        "dark-navy": "hsl(224, 71.4%, 4.1%)", // Added dark navy color
+        "dark-navy": "hsl(224, 71.4%, 4.1%)",
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))"
@@ -50,6 +50,25 @@ module.exports = {
           3: "hsl(var(--chart-3))",
           4: "hsl(var(--chart-4))",
           5: "hsl(var(--chart-5))"
+        },
+        // Custom form colors
+        form: {
+          black: "#000000",
+          white: "#FFFFFF",
+          gray: {
+            300: "#E0E0E0",
+            500: "#9E9E9E",
+            800: "#424242"
+          },
+          slate: {
+            800: "#1E293B"
+          }
+        },
+        button: {
+          hover: "#1A1A1A"
+        },
+        link: {
+          hover: "#4D4D4D"
         }
       },
       fontFamily: {

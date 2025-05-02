@@ -6,9 +6,14 @@
   :root {
     --radius: 0.5rem;
   }
+
+  /* Reset Box Model */
   * {
     @apply border-border;
+    box-sizing: border-box; /* Ensure consistent box sizing across elements */
   }
+
+  /* Body Styling */
   body {
     @apply min-h-screen bg-background text-foreground;
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -19,10 +24,48 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
+  /* Anchor Tag Styling */
   a {
     @apply font-medium text-primary hover:text-primary/90;
   }
+
+  /* Button Styling */
   button {
     @apply rounded-lg border border-transparent px-4 py-2 font-medium text-sm transition-colors;
+  }
+
+  /* Flexbox reset */
+  .flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Relative and Absolute Positioning Fix */
+  .relative {
+    position: relative;
+  }
+
+  .absolute {
+    position: absolute;
+  }
+
+  /* Prevent overflow issues */
+  .overflow-hidden {
+    overflow: hidden;
+  }
+
+  /* Preventing line overflows */
+  .overflow-visible {
+    overflow: visible;
+  }
+
+  /* Optional: Reset for default form elements */
+  input,
+  textarea,
+  select,
+  button {
+    @apply outline-none focus:ring-2 focus:ring-primary/50;
   }
 }
