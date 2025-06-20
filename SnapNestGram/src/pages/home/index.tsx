@@ -6,7 +6,7 @@ interface IHomeProps {
 
 const Home: React.FC<IHomeProps> = ({ name }) => {
   return (
-    <div>
+    <div style={{ color: "black", backgroundColor: "white", padding: "20px" }}>
       <h1>Hello {name}!</h1>
     </div>
   );
