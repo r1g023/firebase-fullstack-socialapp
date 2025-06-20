@@ -50,12 +50,18 @@ export const UserAuthProvider: React.FC<IUserAuthProviderProps> = ({
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, currentUser => {
-      setUser(currentUser);
+    const unsubscribe = onAuthStateChanged(auth, user => {
+      console.log("I am in useEffect and user is : ", user);
+      if (user) {
+        console.log("The logged in user state is : ", user);
+        setUser(user);
+      } else {
+        setUser(null); // Make sure to handle logout
+      }
     });
 
     return () => {
-      unsubscribe();
+      unsubscribe(); // Cleanup listener on unmount
     };
   }, []);
 

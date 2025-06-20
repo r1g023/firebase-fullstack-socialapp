@@ -5,6 +5,16 @@
 @layer base {
   :root {
     --radius: 0.5rem;
+
+    /* Light mode (default) */
+    --background: 0 0% 100%; /* white */
+    --foreground: 222.2 47.4% 11.2%; /* dark text */
+  }
+
+  html.dark {
+    /* Dark mode overrides */
+    --background: 224 71.4% 4.1%; /* dark navy */
+    --foreground: 210 40% 98%; /* light text */
   }
 
   /* Reset Box Model */
